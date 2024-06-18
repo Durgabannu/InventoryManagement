@@ -1,0 +1,41 @@
+server:
+  port: 8085
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: apiGateway
+  cloud:
+    gateway:
+      routes:
+        - id: reporting-service
+          uri: lb://Reporting-Dashboard-Service
+          predicates:
+            - Path=/reports/**
+        - id: stock-service
+          uri: lb://Stock-Replenishment-Service
+          predicates:
+            - Path=/stocks/**
+        - id: supplier-service
+          uri: lb://supplier-management-service
+          predicates:
+            - Path=/suppliers/**
+        - id: inventory-service
+          uri: lb://inventory-tracking-service
+          predicates:
+            - Path=/inventory/**
+        - id: order-service
+          uri: lb://order-fulfillment-service
+          predicates:
+            - Path=/orders/**
+      discovery:
+        locator:
+          enabled: true
+
+eureka:
+      client:
+        service-url:
+          defaultZone: http://localhost:8761/eureka/
+      instance:
+        prefer-ip-address: true
