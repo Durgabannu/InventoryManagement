@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.toyStore.model.Order;
 import com.toyStore.model.Report;
 import com.toyStore.service.ReportService;
 
@@ -71,4 +72,15 @@ public class ReportController {
             return ResponseEntity.notFound().build();
         }
     }
+    
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable("id") Long id) {
+        return reportService.getOrderByIdFromOrderService(id);
+    }
+
+    @GetMapping("/orders/all")
+    public ResponseEntity<List<Order>> getAllOrders() {
+        return reportService.getAllOrdersFromOrderService();
+    }
+    
 }

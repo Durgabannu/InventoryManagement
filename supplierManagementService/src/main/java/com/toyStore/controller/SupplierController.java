@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.toyStore.model.Order;
+import com.toyStore.model.Stock;
 import com.toyStore.model.Supplier;
 import com.toyStore.service.SupplierService;
 
@@ -67,4 +69,25 @@ public class SupplierController {
         return ResponseEntity.ok().build();
     }
 
+    
+    
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable("id") Long id) {
+        return supplierService.getOrderById(id);
+    }
+
+    @GetMapping("/orders")
+    public ResponseEntity<List<Order>> getAllOrders() {
+        return supplierService.getAllOrders();
+    }
+
+    @GetMapping("/stocks/{itemId}")
+    public ResponseEntity<?> getStockByItemId(@PathVariable("itemId") Long itemId) {
+        return supplierService.getStockByItemId(itemId);
+    }
+
+    @GetMapping("/stocks")
+    public ResponseEntity<List<Stock>> getAllStocks() {
+        return supplierService.getAllStocks();
+    }
 }

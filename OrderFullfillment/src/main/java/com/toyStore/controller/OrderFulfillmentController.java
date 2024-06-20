@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.toyStore.model.InventoryItem;
 import com.toyStore.model.Order;
+import com.toyStore.model.Report;
+import com.toyStore.model.Stock;
 import com.toyStore.service.OrderService;
 
 @RestController
@@ -64,6 +67,33 @@ public class OrderFulfillmentController {
 	    public ResponseEntity<Void> deleteOrder(@PathVariable("id") Long id) {
 	        orderService.deleteOrder(id);
 	        return ResponseEntity.ok().build();
+	    }
+	    
+	    
+	 // endpoints using Feign clients
+
+	    @GetMapping("/inventory/all")
+	    public ResponseEntity<List<InventoryItem>> getAllInventoryItemsFromFeignClient() {
+	        ResponseEntity<List<InventoryItem>> response = orderService.getAllInventoryItems();
+	        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+	    }
+
+	    @GetMapping("/reports/all")
+	    public ResponseEntity<List<Report>> getAllReportsFromFeignClient() {
+	        ResponseEntity<List<Report>> response = orderService.getAllReports();
+	        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+	    }
+
+	    @GetMapping("/stocks/{itemId}")
+	    public ResponseEntity<?> getStockByItemIdFromFeignClient(@PathVariable("itemId") Long itemId) {
+	        ResponseEntity<?> response = orderService.getStockByItemId(itemId);
+	        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+	    }
+
+	    @GetMapping("/stocks/all")
+	    public ResponseEntity<List<Stock>> getAllStocksFromFeignClient() {
+	        ResponseEntity<List<Stock>> response = orderService.getAllStocks();
+	        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
 	    }
 
 }

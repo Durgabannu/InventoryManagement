@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.toyStore.model.InventoryItem;
+import com.toyStore.model.Order;
+import com.toyStore.model.Report;
 import com.toyStore.model.Stock;
 import com.toyStore.service.StockService;
 
@@ -64,6 +67,26 @@ public class StockController {
 	    public ResponseEntity<Void> deleteStock(@PathVariable("id") Long id) {
 	        stockService.deleteStock(id);
 	        return ResponseEntity.ok().build();
+	    }
+	    
+	    @GetMapping("/reports/all")
+	    public ResponseEntity<List<Report>> getAllReports() {
+	        return stockService.getAllReports();
+	    }
+
+	    @GetMapping("/orders/{id}")
+	    public ResponseEntity<?> getOrderById(@PathVariable("id") Long id) {
+	        return stockService.getOrderById(id);
+	    }
+
+	    @GetMapping("/orders/all")
+	    public ResponseEntity<List<Order>> getAllOrders() {
+	        return stockService.getAllOrders();
+	    }
+
+	    @GetMapping("/inventory/all")
+	    public ResponseEntity<List<InventoryItem>> getAllInventoryItems() {
+	        return stockService.getAllInventoryItems();
 	    }
 
 }

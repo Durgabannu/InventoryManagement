@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.toyStore.model.InventoryItem;
+import com.toyStore.model.Order;
+import com.toyStore.model.Stock;
 import com.toyStore.service.InventoryService;
 
 @RestController
@@ -64,4 +66,35 @@ public class InventoryController {
 	            return ResponseEntity.notFound().build();
 	        }
 	    }
+	 //order Fulfillment 
+	 @GetMapping("/orders/{id}")
+	    public ResponseEntity<?> getOrderById(@PathVariable("id") Long id) {
+	        return inventoryService.getOrderById(id);
+	    }
+
+	    @GetMapping("/orders/all")
+	    public ResponseEntity<List<Order>> getAllOrders() {
+	        return inventoryService.getAllOrders();
+	    }
+	    
+	    //Stock
+
+	    @GetMapping("/stocks/{itemId}")
+	    public ResponseEntity<?> getStockByItemId(@PathVariable("itemId") Long itemId) {
+	        return inventoryService.getStockByItemId(itemId);
+	    }
+
+	    @GetMapping("/stocks/all")
+	    public ResponseEntity<List<Stock>> getAllStocks() {
+	        return inventoryService.getAllStocks();
+	    }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 }

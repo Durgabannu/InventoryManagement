@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.toyStore.feignClient.OrderFulfillmentFeignClient;
+import com.toyStore.model.Order;
 import com.toyStore.model.Report;
 import com.toyStore.repository.ReportRepository;
 
@@ -15,6 +18,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     private ReportRepository reportRepository;
+    @Autowired
+    private OrderFulfillmentFeignClient orderFulfillmentFeignClient;
 
     @Override
     public List<Report> getReportsByDateRange(LocalDate startDate, LocalDate endDate) {
@@ -55,5 +60,14 @@ public class ReportServiceImpl implements ReportService {
         } else {
             return false;
         }
+    }
+    
+    
+    public ResponseEntity<?> getOrderByIdFromOrderService(Long id) {
+        return orderFulfillmentFeignClient.getOrderById(id);
+    }
+
+    public ResponseEntity<List<Order>> getAllOrdersFromOrderService() {
+        return orderFulfillmentFeignClient.getAllOrders();
     }
 }
